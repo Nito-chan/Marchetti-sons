@@ -68,7 +68,19 @@ export function initEngine() {
     },
   });
 
-  ScrollTrigger.refresh();
+  const ensurePin = () => {
+    ScrollTrigger.refresh();
+    // The pin must contribute ~PIN_EFF of scroll; otherwise re-measure once settled.
+    if (st.end - st.start < window.innerHeight * 6) {
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    }
+  };
+  ensurePin();
+  // Late layout shifts (webfonts, images) silently break the pin: re-measure.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(ensurePin);
+  }
+  window.addEventListener('load', ensurePin);
   // Reload landing mid-page: snap with no glide, then resume damping.
   target = frameAt(st.progress * PIN_EFF);
   scrollVH = st.progress * PIN_EFF;

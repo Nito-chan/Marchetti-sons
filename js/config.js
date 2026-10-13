@@ -54,8 +54,8 @@ export const EVENTS = {
 // Leader lines draw in over CALLOUT_DRAW frames, then fade with T5.
 // len: leader-line length in px (spec range 64-120).
 export const CALLOUTS = [
-  { id: 'calibre', label: 'CALIBRE', value: '.45 ACP', x: 58, y: 47, len: 120 },
-  { id: 'drum', label: 'FED BY', value: '50-ROUND DRUM', x: 52, y: 61, len: 96 },
-  { id: 'stock', label: 'STOCK', value: 'OILED AMERICAN WALNUT', x: 41, y: 52, len: 72 },
+  { id: 'calibre', label: 'CALIBRE', value: '.45 ACP', x: 58, y: 47, len: 120, dir: 'up' },
+  { id: 'drum', label: 'FED BY', value: '50-ROUND DRUM', x: 52, y: 61, len: 96, dir: 'down' },
+  { id: 'stock', label: 'STOCK', value: 'OILED AMERICAN WALNUT', x: 41, y: 52, len: 120, dir: 'down' },
 ];
 export const CALLOUT_DRAW = [124, 136];

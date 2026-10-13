@@ -4,8 +4,6 @@
 
 #story {
   position: relative;
-  height: 100vh;
-  height: 100svh;
   overflow: hidden;
   background: var(--ink);
 }
@@ -288,23 +286,27 @@
 .callout { position: absolute; width: 0; height: 0; }
 .co-label {
   position: absolute;
-  right: calc(var(--co-len, 96px) + 12px);
-  top: 0;
-  translate: 0 -50%;
+  left: 0;
+  translate: -50% 0;
   font-family: var(--font-type);
   font-size: 12px;
   color: var(--brass);
   white-space: nowrap;
+  text-align: center;
 }
 .co-label b { font-weight: 400; color: var(--bone); }
+/* Vertical leaders: label floats above or below the gun point, never on it. */
+.callout[data-dir="up"] .co-label { bottom: calc(var(--co-len, 96px) + 12px); }
+.callout[data-dir="down"] .co-label { top: calc(var(--co-len, 96px) + 12px); }
 .co-leader {
   position: absolute;
-  right: 4px;
-  top: -6px;
-  width: var(--co-len, 96px);
-  height: 12px;
+  left: -6px;
+  width: 12px;
+  height: var(--co-len, 96px);
   overflow: visible;
 }
+.callout[data-dir="up"] .co-leader { bottom: 4px; }
+.callout[data-dir="down"] .co-leader { top: 4px; transform: scaleY(-1); }
 .co-line {
   stroke: var(--brass);
   stroke-width: 1;
@@ -480,3 +482,9 @@
     font-size: 11px;
   }
 }
+
+/* Lenis companion CSS: required for correct native scroll + pin measurement. */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }

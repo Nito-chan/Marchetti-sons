@@ -1,5 +1,5 @@
 // main.js — boot order, incl. the reduced-motion branch (spec section 8).
-import { preloadFrames } from './frames.js';
+import { preloadFrames, loadedCount } from './frames.js';
 import { initEngine, onTick, getLenis } from './engine.js';
 import { initFx } from './fx.js';
 import { initCta, updateSound } from './cta.js';
@@ -17,8 +17,10 @@ if (debug && debugEl) {
   debugEl.hidden = false;
   if (debugGrid) debugGrid.hidden = false;
   onTick(({ playhead, target, vel }) => {
+    const spacer = document.querySelector('.pin-spacer');
+    const spacerVh = spacer ? ((spacer.offsetHeight - window.innerHeight) / window.innerHeight * 100).toFixed(0) : 'none';
     debugEl.textContent =
-      `frame ${playhead.toFixed(1)} / target ${target.toFixed(1)} / vel ${vel.toFixed(1)} f/s`;
+      `frame ${playhead.toFixed(1)} / target ${target.toFixed(1)} / vel ${vel.toFixed(1)} f/s / cache ${loadedCount()} / spacer ${spacerVh}vh`;
   });
 }
 

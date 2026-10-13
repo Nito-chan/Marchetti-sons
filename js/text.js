@@ -49,6 +49,7 @@ function grab() {
     el.style.left = `${c.x}%`;
     el.style.top = `${c.y}%`;
     el.style.setProperty('--co-len', `${c.len}px`);
+    el.dataset.dir = c.dir;
   });
   // Rail diamonds sit at chapter frames I-V (1, 87, 162, 229, 300).
   railStops.forEach((s) => {
