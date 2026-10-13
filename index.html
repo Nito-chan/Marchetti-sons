@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marchetti &amp; Sons — Fine Arms, Est. 1927 · The Consigliere M-31</title>
+  <meta name="description" content="A scroll-driven cinematic story: a vintage submachine gun assembles piece by piece, and the muzzle flash reveals the buy page. A fictional brand, built as a portfolio piece.">
+  <meta name="theme-color" content="#0b0908">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Marchetti &amp; Sons — Fine Arms, Est. 1927 · The Consigliere M-31">
+  <meta property="og:description" content="A scroll-driven cinematic story: a vintage submachine gun assembles piece by piece, and the muzzle flash reveals the buy page. A fictional brand, built as a portfolio piece.">
+  <meta property="og:image" content="/assets/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Marchetti &amp; Sons — Fine Arms, Est. 1927 · The Consigliere M-31">
+  <meta name="twitter:description" content="A scroll-driven cinematic story: a vintage submachine gun assembles piece by piece, and the muzzle flash reveals the buy page. A fictional brand, built as a portfolio piece.">
+  <meta name="twitter:image" content="/assets/og.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 112'%3E%3Cpath d='M50 4 L92 16 V52 C92 78 72 94 50 106 C28 94 8 78 8 52 V16 Z' fill='%230b0908' stroke='%23b8914a' stroke-width='6'/%3E%3Ctext x='50' y='74' text-anchor='middle' font-family='Georgia,serif' font-weight='bold' font-size='48' fill='%23b8914a'%3EM%3C/text%3E%3C/svg%3E">
+
+  <!-- Fonts (section 3). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <!-- First 3 frames + fonts only (spec section 8). -->
+  <link rel="preload" as="image" media="(min-width: 821px)" href="assets/frames/desktop/f_0001.webp">
+  <link rel="preload" as="image" media="(min-width: 821px)" href="assets/frames/desktop/f_0002.webp">
+  <link rel="preload" as="image" media="(min-width: 821px)" href="assets/frames/desktop/f_0003.webp">
+  <link rel="preload" as="image" media="(max-width: 820px)" href="assets/frames/mobile/f_0001.webp">
+  <link rel="preload" as="image" media="(max-width: 820px)" href="assets/frames/mobile/f_0002.webp">
+  <link rel="preload" as="image" media="(max-width: 820px)" href="assets/frames/mobile/f_0003.webp">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/story.css">
+  <link rel="stylesheet" href="css/finale.css">
+
+  <!-- Stack (section 1): GSAP 3.12.5 + ScrollTrigger, Lenis 1.1.13. -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#cta">Skip to the buy page</a>
+
+  <div id="preloader" role="status" aria-label="Loading the story">
+    <div class="preloader-inner">
+      <svg class="crest preloader-crest" viewBox="0 0 100 112" stroke="currentColor" fill="none" stroke-width="1.25" aria-hidden="true" focusable="false">
+        <path d="M50 4 L92 16 V52 C92 78 72 94 50 106 C28 94 8 78 8 52 V16 Z"/>
+        <path d="M50 12 L84 22 V52 C84 73 68 87 50 97 C32 87 16 73 16 52 V22 Z"/>
+        <text x="50" y="70" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="44" fill="currentColor" stroke="none">M</text>
+      </svg>
+      <div class="preloader-bar" aria-hidden="true"><span class="preloader-fill" id="preloader-fill"></span></div>
+      <p class="preloader-text">PREPARING THE FAMILY BUSINESS&hellip; <span id="preloader-pct">0</span>%</p>
+    </div>
+  </div>
+
+  <!-- Fixed chrome (spec section 5). -->
+  <header class="chrome-header">
+    <button class="brand" id="brand-home" type="button" aria-label="Marchetti and Sons — back to the beginning">
+      <svg class="crest" viewBox="0 0 100 112" stroke="currentColor" fill="none" stroke-width="1.25" aria-hidden="true" focusable="false">
+        <path d="M50 4 L92 16 V52 C92 78 72 94 50 106 C28 94 8 78 8 52 V16 Z"/>
+        <path d="M50 12 L84 22 V52 C84 73 68 87 50 97 C32 87 16 73 16 52 V22 Z"/>
+        <text x="50" y="70" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="44" fill="currentColor" stroke="none">M</text>
+      </svg>
+      <span class="brand-text" aria-hidden="true">
+        <span class="brand-name">MARCHETTI &amp; SONS</span>
+        <span class="brand-sub">FINE ARMS · EST. 1927</span>
+      </span>
+    </button>
+  </header>
+
+  <div class="chrome-right">
+    <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false" aria-label="Toggle ambient sound">
+      <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
+        <path d="M3 7.5v5h2.8L10 16V4L5.8 7.5H3z" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/>
+        <path class="wave" d="M12.5 7.2c1.3 1.7 1.3 3.9 0 5.6" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+        <line class="mute-line" x1="3" y1="3" x2="17" y2="17" stroke="currentColor" stroke-width="1.25"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="rail" id="rail" aria-hidden="true">
+    <div class="rail-track"><div class="rail-fill"></div></div>
+    <div class="rail-stop" data-frame="1"><span class="rail-num">I</span><span class="rail-dia"></span></div>
+    <div class="rail-stop" data-frame="87"><span class="rail-num">II</span><span class="rail-dia"></span></div>
+    <div class="rail-stop" data-frame="162"><span class="rail-num">III</span><span class="rail-dia"></span></div>
+    <div class="rail-stop" data-frame="229"><span class="rail-num">IV</span><span class="rail-dia"></span></div>
+    <div class="rail-stop" data-frame="300"><span class="rail-num">V</span><span class="rail-dia"></span></div>
+  </div>
+
+  <div class="scroll-cue" id="scroll-cue" aria-hidden="true">
+    <span class="scroll-cue-label">SCROLL</span>
+    <span class="scroll-cue-line"></span>
+  </div>
+
+  <main id="top">
+    <section id="story" aria-live="off">
+      <div id="stage">
+        <canvas id="footage" role="img" aria-label="A vintage submachine gun assembles piece by piece, is taken up by a man in a fedora, and fires."></canvas>
+
+        <div class="smoke" aria-hidden="true">
+          <div class="puff puff--1"></div>
+          <div class="puff puff--2"></div>
+          <div class="puff puff--3"></div>
+        </div>
+
+        <div class="giants" aria-hidden="true">
+          <div class="giant h-giant" id="g-parts">PARTS</div>
+          <div class="giant h-giant" id="g-craft">CRAFT</div>
+          <div class="giant h-giant" id="g-hand">HAND</div>
+          <div class="giant h-giant" id="g-lastword">LAST WORD</div>
+        </div>
+
+        <canvas id="dust" aria-hidden="true"></canvas>
+
+        <div id="callouts" aria-hidden="true">
+          <div class="callout" id="co-calibre">
+            <span class="co-label">CALIBRE · <b>.45 ACP</b></span>
+            <svg class="co-leader" viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <line class="co-line" x1="2" y1="6" x2="110" y2="6" pathLength="1"/>
+              <circle class="co-tip" cx="114" cy="6" r="2.5"/>
+            </svg>
+          </div>
+          <div class="callout" id="co-drum">
+            <span class="co-label">FED BY · <b>50-ROUND DRUM</b></span>
+            <svg class="co-leader" viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <line class="co-line" x1="2" y1="6" x2="110" y2="6" pathLength="1"/>
+              <circle class="co-tip" cx="114" cy="6" r="2.5"/>
+            </svg>
+          </div>
+          <div class="callout" id="co-stock">
+            <span class="co-label">STOCK · <b>OILED AMERICAN WALNUT</b></span>
+            <svg class="co-leader" viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <line class="co-line" x1="2" y1="6" x2="110" y2="6" pathLength="1"/>
+              <circle class="co-tip" cx="114" cy="6" r="2.5"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="tblock tblock--left" id="t1" aria-hidden="true">
+          <p class="label" data-s="2">CHAPTER I — THE PARTS</p>
+          <h1 class="h-display" data-s="0">EVERY GREAT FAMILY<br>STARTS WITH A FEW PIECES.</h1>
+          <p class="sub-italic" data-s="1">Walnut. Blued steel. Brass. Nothing else, nothing less.</p>
+        </div>
+        <div class="tblock tblock--left" id="t2" aria-hidden="true">
+          <p class="label" data-s="2">I · THE RECEIVER</p>
+          <h2 class="h-display" data-s="0">MILLED, NOT MADE.</h2>
+          <p class="body-copy" data-s="1">Cut from a single bar of forged steel in our Chicago shop, then blued by hand.</p>
+        </div>
+        <div class="tblock tblock--left" id="t3" aria-hidden="true">
+          <p class="label" data-s="2">II · THE STOCK</p>
+          <h2 class="h-display" data-s="0">WALNUT, OILED SEVEN TIMES.</h2>
+          <p class="body-copy" data-s="1">Every stock is fitted to its receiver and never to another.</p>
+        </div>
+        <div class="tblock tblock--left-lower" id="t4" aria-hidden="true">
+          <p class="label" data-s="2">III · THE DRUM</p>
+          <h2 class="h-display" data-s="0">FIFTY ROUNDS. ONE ARGUMENT.</h2>
+        </div>
+        <div class="tblock tblock--left" id="t5" aria-hidden="true">
+          <p class="label" data-s="2">THE CONSIGLIERE M-31</p>
+          <h2 class="h-display" data-s="0">SETTLED BY MARCHETTI.</h2>
+          <p class="body-copy" data-s="1">The only argument we have never lost.</p>
+        </div>
+        <div class="tblock tblock--left" id="t6" aria-hidden="true">
+          <p class="label" data-s="2">CHAPTER II — THE MAN</p>
+          <h2 class="h-display" data-s="0">EVERY GUN NEEDS A STEADY HAND.</h2>
+        </div>
+        <div class="tblock tblock--bottom" id="t7" aria-hidden="true">
+          <p class="sub-italic" data-s="1">Some men carry a name. Some men carry a Marchetti.</p>
+        </div>
+        <div class="tblock tblock--bottom" id="t8" aria-hidden="true">
+          <p class="label" data-s="2">CHAPTER III — THE LAST WORD</p>
+          <h2 class="h-display" data-s="0">WE DON&rsquo;T RAISE OUR VOICES.</h2>
+        </div>
+        <div class="tblock tblock--bottom" id="t9" aria-hidden="true">
+          <h2 class="h-display" data-s="0">WE RAISE THE STAKES.</h2>
+        </div>
+
+        <div class="letterbox letterbox--top" aria-hidden="true"></div>
+        <div class="letterbox letterbox--bottom" aria-hidden="true"></div>
+        <svg class="corner corner--tl" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+        <svg class="corner corner--tr" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+        <svg class="corner corner--br" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+        <svg class="corner corner--bl" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+        <div class="sweep" id="sweep" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Reduced-motion stills: shown instead of the pinned story (spec section 8). -->
+    <section class="rm-stills" id="stills" aria-label="The story in stills">
+      <figure class="rm-still">
+        <img src="assets/frames/desktop/f_0001.webp" srcset="assets/frames/mobile/f_0001.webp 800w, assets/frames/desktop/f_0001.webp 1600w" sizes="(max-width: 820px) 100vw, 55vw" alt="Gun parts floating in darkness before assembly">
+        <figcaption>
+          <p class="label">CHAPTER I — THE PARTS</p>
+          <h1 class="h-display">EVERY GREAT FAMILY STARTS WITH A FEW PIECES.</h1>
+          <p class="sub-italic">Walnut. Blued steel. Brass. Nothing else, nothing less.</p>
+        </figcaption>
+      </figure>
+      <figure class="rm-still">
+        <img src="assets/frames/desktop/f_0087.webp" srcset="assets/frames/mobile/f_0087.webp 800w, assets/frames/desktop/f_0087.webp 1600w" sizes="(max-width: 820px) 100vw, 55vw" alt="The walnut stock locking to the steel receiver" loading="lazy">
+        <figcaption>
+          <p class="label">II · THE STOCK</p>
+          <h2 class="h-display">WALNUT, OILED SEVEN TIMES.</h2>
+          <p class="body-copy">Every stock is fitted to its receiver and never to another.</p>
+        </figcaption>
+      </figure>
+      <figure class="rm-still">
+        <img src="assets/frames/desktop/f_0125.webp" srcset="assets/frames/mobile/f_0125.webp 800w, assets/frames/desktop/f_0125.webp 1600w" sizes="(max-width: 820px) 100vw, 55vw" alt="The finished Consigliere M-31 with its drum magazine" loading="lazy">
+        <figcaption>
+          <p class="label">THE CONSIGLIERE M-31</p>
+          <h2 class="h-display">SETTLED BY MARCHETTI.</h2>
+          <p class="body-copy">The only argument we have never lost.</p>
+        </figcaption>
+      </figure>
+      <figure class="rm-still">
+        <img src="assets/frames/desktop/f_0195.webp" srcset="assets/frames/mobile/f_0195.webp 800w, assets/frames/desktop/f_0195.webp 1600w" sizes="(max-width: 820px) 100vw, 55vw" alt="A man in a fedora taking hold of the finished gun" loading="lazy">
+        <figcaption>
+          <p class="label">CHAPTER II — THE MAN</p>
+          <h2 class="h-display">EVERY GUN NEEDS A STEADY HAND.</h2>
+        </figcaption>
+      </figure>
+      <figure class="rm-still">
+        <img src="assets/frames/desktop/f_0265.webp" srcset="assets/frames/mobile/f_0265.webp 800w, assets/frames/desktop/f_0265.webp 1600w" sizes="(max-width: 820px) 100vw, 55vw" alt="The man leaning in as the muzzle flash begins" loading="lazy">
+        <figcaption>
+          <p class="label">CHAPTER III — THE LAST WORD</p>
+          <h2 class="h-display">WE DON&rsquo;T RAISE OUR VOICES.</h2>
+        </figcaption>
+      </figure>
+    </section>
+
+    <div id="flash" aria-hidden="true"></div>
+
+    <section id="cta" aria-labelledby="cta-heading">
+      <svg class="sunburst" viewBox="0 0 600 600" aria-hidden="true" focusable="false"><g id="rays"></g></svg>
+      <div class="cta-inner">
+        <svg class="crest cta-crest cta-item" viewBox="0 0 100 112" stroke="currentColor" fill="none" stroke-width="1.25" aria-hidden="true" focusable="false">
+          <path d="M50 4 L92 16 V52 C92 78 72 94 50 106 C28 94 8 78 8 52 V16 Z"/>
+          <path d="M50 12 L84 22 V52 C84 73 68 87 50 97 C32 87 16 73 16 52 V22 Z"/>
+          <text x="50" y="70" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="44" fill="currentColor" stroke="none">M</text>
+        </svg>
+        <p class="label cta-label cta-item">THE CONSIGLIERE M-31 · LIMITED RUN OF 1,931</p>
+        <h2 class="h-display cta-item" id="cta-heading">A FAMILY BUSINESS, SINCE 1927.</h2>
+        <p class="sub-italic cta-item">One gun. Fitted by hand. Delivered with discretion.</p>
+        <div class="divider cta-item" aria-hidden="true"></div>
+        <div class="spec-strip cta-item">
+          <div class="spec"><span class="spec-fig">50</span><span class="spec-label">ROUND DRUM</span></div>
+          <div class="spec"><span class="spec-fig">.45</span><span class="spec-label">ACP</span></div>
+          <div class="spec"><span class="spec-fig">7</span><span class="spec-label">COATS OF OIL</span></div>
+        </div>
+        <div class="cta-item">
+          <p class="price">$2,450</p>
+          <p class="price-sub">or four payments of $612.50</p>
+        </div>
+        <button class="btn-primary cta-item" type="button" data-modal-open>MAKE AN OFFER YOU CAN&rsquo;T REFUSE</button>
+        <p class="cta-item"><button class="link-quiet" type="button" data-modal-open>Request a private viewing</button></p>
+      </div>
+      <svg class="corner corner--tl corner--lg" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+      <svg class="corner corner--tr corner--lg" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+      <svg class="corner corner--br corner--lg" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+      <svg class="corner corner--bl corner--lg" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+    </section>
+
+    <section class="case" id="case" aria-labelledby="case-heading">
+      <div class="case-grid">
+        <div>
+          <p class="label">IN THE CASE</p>
+          <h2 class="h-display" id="case-heading">EVERYTHING THAT ARRIVES AT YOUR DOOR.</h2>
+        </div>
+        <ul class="case-list">
+          <li class="case-item">The Consigliere M-31, blued and numbered</li>
+          <li class="case-item">Fifty-round drum magazine</li>
+          <li class="case-item">Walnut stock, oiled seven times</li>
+          <li class="case-item">Oiled cloth and brass cleaning rod</li>
+          <li class="case-item">Certificate signed by a Marchetti</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <svg class="crest" viewBox="0 0 100 112" stroke="currentColor" fill="none" stroke-width="1.25" aria-hidden="true" focusable="false">
+          <path d="M50 4 L92 16 V52 C92 78 72 94 50 106 C28 94 8 78 8 52 V16 Z"/>
+          <path d="M50 12 L84 22 V52 C84 73 68 87 50 97 C32 87 16 73 16 52 V22 Z"/>
+          <text x="50" y="70" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="700" font-size="44" fill="currentColor" stroke="none">M</text>
+        </svg>
+        <span class="brand-text" aria-hidden="true">
+          <span class="brand-name">MARCHETTI &amp; SONS</span>
+          <span class="brand-sub">FINE ARMS · EST. 1927</span>
+        </span>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="#top" data-scroll="#top">The Consigliere</a>
+        <a href="#cta" data-scroll="#cta">Private Viewing</a>
+        <a href="#case" data-scroll="#case">The Family</a>
+      </nav>
+      <p class="footer-credit"><a href="#">Made by Nitō — a portfolio project</a></p>
+    </div>
+    <p><a class="to-top" href="#top" data-scroll="#top" data-duration="2.4" id="to-top"><span aria-hidden="true">↑</span> Back to the beginning</a></p>
+    <div class="divider divider--full" aria-hidden="true"></div>
+    <p class="legal">Marchetti &amp; Sons is a fictional brand created for a design portfolio. Replica and airsoft models only — no live firearms are sold or implied.</p>
+  </footer>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <svg class="modal-corner modal-corner--tl" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+      <svg class="modal-corner modal-corner--tr" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+      <svg class="modal-corner modal-corner--br" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+      <svg class="modal-corner modal-corner--bl" aria-hidden="true" focusable="false"><use href="#deco-corner"/></svg>
+      <h2 class="h-display modal-title" id="modal-title">THIS IS A PORTFOLIO PIECE.</h2>
+      <p class="body-copy modal-body">Marchetti &amp; Sons is a fictional brand, built to show what a scroll-driven story can do. There is nothing to buy. If you&rsquo;d like something this cinematic for your own brand, let&rsquo;s talk.</p>
+      <div class="modal-actions">
+        <a class="btn-primary" href="mailto:hello@example.com">START A PROJECT</a>
+        <button class="btn-secondary" type="button" data-close>BACK TO THE FAMILY</button>
+      </div>
+    </div>
+  </div>
+
+  <noscript>
+    <style>
+      #preloader, #story, #flash, .chrome-header, .chrome-right, .rail, .scroll-cue, #debug { display: none !important; }
+      #cta { position: static; visibility: visible; }
+      .cta-item { opacity: 1; transform: none; }
+      .noscript { max-width: 760px; margin: 0 auto; padding: 12vh 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+      .noscript img { width: 100%; height: auto; }
+    </style>
+    <div class="noscript">
+      <p class="label">THE CONSIGLIERE M-31</p>
+      <h1 class="h-display">SETTLED BY MARCHETTI.</h1>
+      <img src="assets/frames/desktop/f_0125.webp" alt="The finished Consigliere M-31 submachine gun">
+      <h2 class="h-display">A FAMILY BUSINESS, SINCE 1927.</h2>
+      <p class="sub-italic">One gun. Fitted by hand. Delivered with discretion.</p>
+      <p class="price">$2,450</p>
+      <p><a class="link-quiet" href="mailto:hello@example.com">Request a private viewing</a></p>
+    </div>
+  </noscript>
+
+  <svg width="0" height="0" class="svg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="deco-corner" viewBox="0 0 48 48">
+        <path d="M1 47V1H47 M7 47V7H47 M13 47V13H47" fill="none" stroke="currentColor" stroke-width="1.25"/>
+      </symbol>
+      <filter id="streak-blur" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur id="streak-dev" stdDeviation="0 0"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div id="debug" hidden></div>
+  <div id="debug-grid" hidden></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

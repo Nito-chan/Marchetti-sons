@@ -1,0 +1,162 @@
+/* base.css — tokens, reset, type, grain, vignette (spec section 3). */
+
+:root {
+  --ink: #0b0908;
+  --coal: #15110e;
+  --smoke: #2a221c;
+  --bone: #e9dfcb;
+  --parchment: #c9b99a;
+  --brass: #b8914a;
+  --brass-hi: #e3c57e;
+  --oxblood: #6b1a1a;
+  --flash: #fff4d6;
+
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-type: "Special Elite", "Courier New", monospace;
+}
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, canvas, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+/* Type */
+.h-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(2.4rem, 6.2vw, 6.5rem);
+  line-height: 0.95;
+  max-width: 34ch;
+  color: var(--bone);
+}
+.h-giant {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(7rem, 22vw, 24rem);
+  line-height: 0.95;
+  color: var(--bone);
+  opacity: 0.06;
+}
+.sub-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.7vw, 1.7rem);
+  line-height: 1.4;
+  color: var(--parchment);
+}
+.body-copy {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.65;
+  max-width: 44ch;
+  color: var(--bone);
+}
+.label {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--parchment);
+}
+.type-num {
+  font-family: var(--font-type);
+  font-weight: 400;
+  color: var(--brass);
+}
+
+/* Focus: visible everywhere (spec section 8). */
+:focus-visible {
+  outline: 2px solid var(--brass-hi);
+  outline-offset: 4px;
+}
+
+/* Film grain: fixed full-screen 256px feTurbulence tile, stepped at 8 fps. */
+.grain {
+  position: fixed;
+  inset: -128px;
+  z-index: 400;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  animation: grain-shift 0.75s steps(1, end) infinite;
+}
+@keyframes grain-shift {
+  0%   { background-position: 0 0; }
+  20%  { background-position: -64px 48px; }
+  40%  { background-position: 48px -96px; }
+  60%  { background-position: -96px -32px; }
+  80%  { background-position: 64px 96px; }
+  100% { background-position: 0 0; }
+}
+
+/* Vignette: transparent at 55%, ink at 100%. */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 390;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(11, 9, 8, 0.78) 100%);
+}
+
+/* ---- STEP 6: reduced-motion stills mode (spec section 8) ---- */
+
+.rm-stills { display: none; }
+html.rm .rm-stills {
+  display: block;
+  background: var(--ink);
+  padding: 12vh 6vw 8vh;
+}
+html.rm #story,
+html.rm #flash,
+html.rm .scroll-cue,
+html.rm .rail { display: none; }
+html.rm #cta {
+  position: static;
+  visibility: visible;
+}
+html.rm .cta-item {
+  opacity: 1;
+  transform: none;
+}
+html.rm .grain { animation: none; }
+html.rm .sunburst { animation: none; }
+.rm-still {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 48px;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6vh 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.rm-still.in { opacity: 1; }
+.rm-still img { width: 100%; height: auto; }
+.rm-still .label { color: var(--brass); margin-bottom: 14px; }
+.rm-still .h-display { margin-bottom: 16px; }
+@media (max-width: 819px) {
+  .rm-still { grid-template-columns: 1fr; gap: 20px; }
+}

@@ -1,0 +1,71 @@
+{
+  "fps": 12,
+  "frame_count": 300,
+  "first_frame": "f_0001.webp",
+  "pattern": "f_%04d.webp",
+  "desktop": {
+    "width": 1600,
+    "height": 900,
+    "dir": "frames/desktop"
+  },
+  "mobile": {
+    "width": 800,
+    "height": 450,
+    "dir": "frames/mobile",
+    "note": "full 16:9 frame, not cropped"
+  },
+  "source": "864x480 24fps, upscaled with Lanczos + light sharpen",
+  "events_seconds": {
+    "hero_hold_end": 1.5,
+    "c1_to_c2_crossfade": [
+      5.7,
+      6.0
+    ],
+    "stock_attaches": 7.2,
+    "drum_locks": 9.5,
+    "finished_gun_hold": [
+      10.0,
+      11.7
+    ],
+    "c2_to_c3_crossfade": [
+      11.7,
+      12.0
+    ],
+    "man_appears": 13.4,
+    "gun_in_hands": 16.2,
+    "c3_to_c4_crossfade": [
+      17.4,
+      17.7
+    ],
+    "man_leans_in": 19.0,
+    "shot_starts": 22.0,
+    "end": 25.0
+  },
+  "events_frames": {
+    "hero_hold_end": 19,
+    "c1_to_c2_crossfade": [
+      69,
+      73
+    ],
+    "stock_attaches": 87,
+    "drum_locks": 115,
+    "finished_gun_hold": [
+      121,
+      141
+    ],
+    "c2_to_c3_crossfade": [
+      141,
+      145
+    ],
+    "man_appears": 162,
+    "gun_in_hands": 195,
+    "c3_to_c4_crossfade": [
+      210,
+      213
+    ],
+    "man_leans_in": 229,
+    "shot_starts": 265,
+    "end": 300
+  },
+  "note": "Event times are estimates from motion analysis; confirm in a scrub preview during the site build."
+}

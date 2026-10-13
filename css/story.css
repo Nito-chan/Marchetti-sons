@@ -1,0 +1,482 @@
+/* story.css — stage, text layers, rail, ornaments (spec sections 3 + 5). */
+
+/* ---- STEP 2: preloader, story, stage, canvas, debug overlay ---- */
+
+#story {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+#stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background-color: var(--ink);
+  background-image: radial-gradient(60% 60% at 62% 50%, rgba(184, 145, 74, 0.08), transparent 70%);
+}
+
+#footage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  filter: contrast(1.06) saturate(0.92);
+}
+
+/* Preloader: full-screen ink, pulsing crest, 160px brass hairline bar. */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  transition: opacity 0.8s ease;
+}
+#preloader.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.preloader-crest {
+  width: 64px;
+  height: auto;
+  color: var(--brass);
+  animation: crest-pulse 2.4s ease-in-out infinite;
+}
+@keyframes crest-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.preloader-bar {
+  width: 160px;
+  height: 1px;
+  background: var(--smoke);
+}
+.preloader-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--brass);
+}
+.preloader-text {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--parchment);
+}
+
+/* Debug overlay (?debug=1): playhead frame readout, top-left. */
+#debug {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 600;
+  padding: 6px 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--bone);
+  background: rgba(11, 9, 8, 0.85);
+  border: 1px solid var(--smoke);
+  pointer-events: none;
+}
+#debug[hidden] { display: none; }
+
+/* Debug grid (?debug=1): 10% stage grid for tuning callout coordinates. */
+#debug-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 590;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(to right, rgba(227, 197, 126, 0.28) 0 1px, transparent 1px 10%),
+    repeating-linear-gradient(to bottom, rgba(227, 197, 126, 0.28) 0 1px, transparent 1px 10%);
+}
+#debug-grid[hidden] { display: none; }
+
+/* ---- STEP 3: chrome, text blocks, callouts, giants, rail ---- */
+
+.svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* Skip link: hidden until keyboard focus. */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 600;
+  padding: 12px 16px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--bone);
+  background: var(--coal);
+  border: 1px solid var(--brass);
+  transform: translateY(-250%);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus-visible { transform: none; }
+
+/* Fixed chrome: crest + wordmark, top-left. */
+.chrome-header {
+  position: fixed;
+  top: 32px;
+  left: 32px;
+  z-index: 300;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+.brand .crest {
+  height: 44px;
+  width: auto;
+  color: var(--brass);
+}
+.brand-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: var(--bone);
+  white-space: nowrap;
+}
+.brand-sub {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--parchment);
+  white-space: nowrap;
+}
+
+/* Progress rail: right edge, 220px tall, chapters I-V. */
+.rail {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  z-index: 300;
+  width: 40px;
+  height: 220px;
+  translate: 0 -50%;
+}
+.rail-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  translate: -50% 0;
+  background: var(--smoke);
+}
+.rail-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--brass);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+}
+.rail-stop { position: absolute; left: 50%; }
+.rail-dia {
+  display: block;
+  width: 6px;
+  height: 6px;
+  translate: -50% -50%;
+  rotate: 45deg;
+  border: 1px solid var(--brass);
+  background: var(--ink);
+}
+.rail-stop.is-active .rail-dia { background: var(--brass); }
+.rail-num {
+  position: absolute;
+  right: 14px;
+  top: 0;
+  translate: 0 -50%;
+  font-family: var(--font-type);
+  font-size: 11px;
+  color: var(--brass);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.rail-stop.is-active .rail-num { opacity: 1; }
+@media (max-width: 819px) {
+  .rail { display: none; }
+}
+
+/* Scroll cue: bottom-centre, visible only until frame 12. */
+.scroll-cue {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  translate: -50% 0;
+}
+.scroll-cue-label {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  color: var(--parchment);
+}
+.scroll-cue-line {
+  width: 1px;
+  height: 36px;
+  background: var(--brass);
+  animation: cue-pulse 2.4s ease-in-out infinite;
+}
+@keyframes cue-pulse {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(8px); }
+}
+
+/* Text blocks: left 38% zone, bottom-left zone. Static centering uses the
+   `translate` property so scroll-driven `transform` stays free. */
+.tblock {
+  position: absolute;
+  z-index: 5;
+  visibility: hidden;
+}
+.tblock--left {
+  left: 6vw;
+  top: 50%;
+  width: 32vw;
+  translate: 0 -50%;
+}
+.tblock--left-lower {
+  left: 6vw;
+  top: 64%;
+  width: 32vw;
+}
+.tblock--bottom {
+  left: 6vw;
+  bottom: 8vh;
+  width: min(40vw, 60ch);
+}
+.tblock [data-s] { opacity: 0; }
+.tblock .label { margin-bottom: 14px; color: var(--brass); }
+.tblock .h-display { margin-bottom: 16px; }
+.tblock > :last-child { margin-bottom: 0; }
+
+/* Spec callouts (T5): % positioned on the gun, leader line draws in. */
+#callouts {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  visibility: hidden;
+  pointer-events: none;
+}
+.callout { position: absolute; width: 0; height: 0; }
+.co-label {
+  position: absolute;
+  right: calc(var(--co-len, 96px) + 12px);
+  top: 0;
+  translate: 0 -50%;
+  font-family: var(--font-type);
+  font-size: 12px;
+  color: var(--brass);
+  white-space: nowrap;
+}
+.co-label b { font-weight: 400; color: var(--bone); }
+.co-leader {
+  position: absolute;
+  right: 4px;
+  top: -6px;
+  width: var(--co-len, 96px);
+  height: 12px;
+  overflow: visible;
+}
+.co-line {
+  stroke: var(--brass);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.co-tip { fill: var(--brass); }
+
+/* Giant background words: cropped by the viewport, above footage. */
+.giants {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.giant {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  visibility: hidden;
+  opacity: 0;
+  white-space: nowrap;
+}
+#g-parts { left: -5vw; }
+#g-hand { left: -5vw; top: 44%; }
+#g-craft { right: -5vw; }
+#g-lastword { right: -5vw; top: 56%; }
+
+/* Letterbox hairlines + deco corners (stage ornaments). */
+.letterbox {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  height: 1px;
+  background: var(--brass);
+  opacity: 0.3;
+  pointer-events: none;
+}
+.letterbox--top { top: 20px; }
+.letterbox--bottom { bottom: 20px; }
+.corner {
+  position: absolute;
+  z-index: 6;
+  width: 48px;
+  height: 48px;
+  color: var(--brass);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.corner--tl { top: 24px; left: 24px; }
+.corner--tr { top: 24px; right: 24px; rotate: 90deg; }
+.corner--br { bottom: 24px; right: 24px; rotate: 180deg; }
+.corner--bl { bottom: 24px; left: 24px; rotate: 270deg; }
+
+/* ---- STEP 4: smoke, dust, chapter sweep (spec section 6) ---- */
+
+.smoke {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.puff {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(233, 223, 203, 0.1), transparent);
+  filter: blur(60px);
+  mix-blend-mode: screen;
+}
+.puff--1 {
+  left: -12vw;
+  top: -18vh;
+  animation: drift-1 44s ease-in-out infinite alternate;
+}
+.puff--2 {
+  right: -15vw;
+  top: 20vh;
+  animation: drift-2 52s ease-in-out infinite alternate;
+}
+.puff--3 {
+  left: 20vw;
+  bottom: -25vh;
+  animation: drift-3 60s ease-in-out infinite alternate;
+}
+@keyframes drift-1 {
+  from { transform: translate(-4vw, -2vh); }
+  to { transform: translate(8vw, 6vh); }
+}
+@keyframes drift-2 {
+  from { transform: translate(6vw, 4vh); }
+  to { transform: translate(-6vw, -4vh); }
+}
+@keyframes drift-3 {
+  from { transform: translate(0, 6vh); }
+  to { transform: translate(-10vw, -2vh); }
+}
+
+#dust {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Chapter title sweep: 1px brass wipe across the top of the stage. */
+.sweep {
+  position: absolute;
+  top: 76px;
+  left: 32px;
+  right: 32px;
+  z-index: 6;
+  height: 1px;
+  background: var(--brass);
+  opacity: 0;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+/* ---- STEP 6: mobile (spec section 8) ---- */
+
+@media (max-width: 819px) {
+  /* All text blocks: lower third, centred, over a bottom scrim. */
+  .tblock--left,
+  .tblock--left-lower,
+  .tblock--bottom {
+    left: 50%;
+    top: auto;
+    bottom: 26vh;
+    width: min(92vw, 60ch);
+    translate: -50% 0;
+    text-align: center;
+  }
+  .tblock .h-display { font-size: clamp(1.7rem, 7.5vw, 2.6rem); }
+  .tblock .body-copy { margin-inline: auto; }
+  .giants { display: none; }
+  .puff--2, .puff--3 { display: none; }
+  #stage::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    height: 62%;
+    background: linear-gradient(to top, rgba(11, 9, 8, 0.55), transparent);
+    pointer-events: none;
+  }
+  /* Callouts become a stacked list under T5, no leader lines. */
+  #callouts {
+    top: auto;
+    bottom: 5vh;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .callout { position: static; width: auto; height: auto; }
+  .co-leader { display: none; }
+  .co-label {
+    position: static;
+    translate: none;
+    white-space: normal;
+    text-align: center;
+    font-size: 11px;
+  }
+}

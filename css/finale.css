@@ -1,0 +1,354 @@
+/* finale.css — flash, CTA page, case band, footer, modal (spec section 7). */
+
+/* Flash: fixed full-screen div, opacity driven by scroll. */
+#flash {
+  position: fixed;
+  inset: 0;
+  z-index: 350;
+  background: #fff4d6;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* CTA page: fixed beneath the flash during the reveal, normal flow after. */
+#cta {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  visibility: hidden;
+  background-color: var(--ink);
+  background-image: radial-gradient(50% 50% at 50% 50%, rgba(184, 145, 74, 0.1), transparent 70%);
+}
+#cta.is-flow {
+  position: static;
+  visibility: visible;
+}
+.sunburst {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(130vw, 1000px);
+  height: auto;
+  translate: -50% -50%;
+  animation: sunspin 240s linear infinite;
+  pointer-events: none;
+}
+@keyframes sunspin {
+  to { transform: rotate(360deg); }
+}
+.cta-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 760px;
+  padding: 96px 24px;
+  text-align: center;
+}
+.cta-item { opacity: 0; }
+.cta-crest {
+  height: 72px;
+  width: auto;
+  color: var(--brass);
+}
+.cta-label { margin-top: 28px; color: var(--brass); }
+.cta-inner .h-display { margin-top: 20px; }
+.cta-inner .sub-italic { margin-top: 18px; }
+
+/* Thin divider with centred diamond. */
+.divider {
+  position: relative;
+  width: 160px;
+  height: 1px;
+  margin: 32px auto;
+  background: var(--brass);
+  opacity: 0.6;
+}
+.divider::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  translate: -50% -50%;
+  rotate: 45deg;
+  background: var(--brass);
+}
+.divider--full {
+  width: 100%;
+  margin: 0 0 24px;
+}
+
+/* Spec strip: Special Elite figures over Inter labels. */
+.spec-strip {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin: 8px 0 28px;
+}
+.spec-fig {
+  display: block;
+  font-family: var(--font-type);
+  font-size: 28px;
+  color: var(--brass);
+}
+.spec-label {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--parchment);
+}
+
+.price {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--bone);
+}
+.price-sub {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--parchment);
+}
+
+/* Primary button: brass fill, oxblood hover, offset outline, rises 2px. */
+.btn-primary {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 20px 40px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--brass);
+  border: 1px solid var(--brass-hi);
+  border-radius: 0;
+  outline: 1px solid transparent;
+  outline-offset: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, outline-color 0.2s ease;
+}
+.btn-primary:hover {
+  background: var(--oxblood);
+  color: var(--bone);
+  transform: translateY(-2px);
+  outline-color: var(--brass-hi);
+}
+
+.link-quiet {
+  margin-top: 20px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: var(--parchment);
+  text-decoration: underline;
+  text-decoration-color: var(--brass);
+  text-underline-offset: 4px;
+}
+
+/* CTA deco corners return at 64px. */
+.corner--lg { width: 64px; height: 64px; }
+
+/* "In the case" band: coal, brass top rule, two columns. */
+.case {
+  position: relative;
+  background: var(--coal);
+  border-top: 1px solid var(--brass);
+  padding: 72px 6vw;
+}
+.case-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.case .label { color: var(--brass); margin-bottom: 14px; }
+.case-list { list-style: none; }
+.case-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 16px;
+  color: var(--bone);
+}
+.case-item::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  translate: 0 -1px;
+  rotate: 45deg;
+  background: var(--brass);
+}
+
+/* Footer: ink, brass top rule, divider above the legal line. */
+.footer {
+  background: var(--ink);
+  border-top: 1px solid var(--brass);
+  padding: 56px 6vw 40px;
+}
+.footer-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto 28px;
+}
+.footer-brand { display: flex; align-items: center; gap: 12px; }
+.footer-brand .crest { height: 44px; width: auto; color: var(--brass); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--parchment);
+}
+.footer-links a:hover { color: var(--bone); }
+.footer-credit { font-size: 13px; color: var(--parchment); }
+.footer-credit a { color: var(--bone); }
+.to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--parchment);
+}
+.to-top:hover { color: var(--bone); }
+.legal {
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--parchment);
+  opacity: 0.7;
+  max-width: 90ch;
+}
+
+/* Sound toggle: top-right, 20px speaker, off by default. */
+.chrome-right {
+  position: fixed;
+  top: 32px;
+  right: 32px;
+  z-index: 300;
+}
+.sound-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: var(--parchment);
+  opacity: 0.55;
+}
+.sound-toggle.is-on { opacity: 1; color: var(--brass-hi); }
+.sound-toggle .wave { display: none; }
+.sound-toggle.is-on .wave { display: block; }
+.sound-toggle .mute-line { display: block; }
+.sound-toggle.is-on .mute-line { display: none; }
+
+/* Modal: blurred ink backdrop, 520px coal panel, brass corners. */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 450;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+}
+.modal.open {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 9, 8, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.modal-panel {
+  position: relative;
+  width: 520px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  padding: 56px 48px;
+  text-align: center;
+  background: var(--coal);
+  border: 1px solid rgba(184, 145, 74, 0.4);
+}
+.modal-corner {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  color: var(--brass);
+  opacity: 0.8;
+}
+.modal-corner--tl { top: 12px; left: 12px; }
+.modal-corner--tr { top: 12px; right: 12px; rotate: 90deg; }
+.modal-corner--bl { bottom: 12px; left: 12px; rotate: 270deg; }
+.modal-corner--br { bottom: 12px; right: 12px; rotate: 180deg; }
+.modal-title { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+.modal-body { margin-top: 18px; }
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px 28px;
+  margin-top: 32px;
+}
+.modal-actions .btn-primary { margin-top: 0; }
+.btn-secondary {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--parchment);
+  text-decoration: underline;
+  text-decoration-color: var(--brass);
+  text-underline-offset: 4px;
+}
+
+/* ---- STEP 6: mobile (spec section 8) ---- */
+
+@media (max-width: 819px) {
+  .cta-inner { padding: 80px 20px; }
+  .spec-strip { gap: 28px; }
+  .btn-primary { width: 100%; max-width: 360px; padding: 20px 16px; }
+  .case-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-grid { flex-direction: column; text-align: center; }
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+  }
+  .to-top { display: inline-flex; min-height: 48px; align-items: center; }
+  .modal-panel { padding: 44px 28px; }
+  .modal-actions .btn-primary { width: 100%; }
+}
